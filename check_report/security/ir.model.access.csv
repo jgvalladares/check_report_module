@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_check_report_gen,access_check_report_gen,model_check_report_gen,,1,1,1,1
+access_check_report_gen_send,access_check_report_gen_send,model_check_report_gen_send,,1,1,1,1
+access_descargar_hojas,access_descargar_hojas,model_descargar_hojas,,1,1,1,1

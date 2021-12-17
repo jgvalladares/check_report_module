@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="check_report_send_wizard_form" model="ir.ui.view">
+            <field name="name">check_report_gen.send</field>
+            <field name="model">check_report_gen.send</field>
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <form string="Check Report send">
+                    <!-- truly invisible fields for control and options -->
+                    <field name="email_from" string="Email from"/>
+                    <field name="email_to" string="Email to"/>
+                    <field name="invoice_without_email"/>
+                    <field name="subir_archivo"/>
+                    
+                    <footer>
+                        <button string="Send email" name="_send_email"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                        
+                    </footer>
+                </form>
+            </field>
+        </record>
+    
+<record model="ir.actions.act_window" id="check_report_gen_action_send">
+			<field name="name">Reporte de cheques</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">check_report_gen.send</field>
+			<field name="target">new</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="check_report_send_wizard_form"/>
+		
+		</record>
+    </data>
+
+</odoo>

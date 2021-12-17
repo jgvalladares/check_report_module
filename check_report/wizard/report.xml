@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<record model="ir.ui.view" id="descargar_hojas_view_form">
+			<field name="name">descargar.hojas.form</field>
+			<field name="model">descargar.hojas</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group string="Check Reports">
+							<field name="file_name" readonly="1" invisible="1" attrs="{'invisible': [('archive', '=', False)]}"/>
+                            <field name="archive" filename="file_name" readonly="1" attrs="{'invisible': [('archive', '=', False)]}"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+<record id="generate_report" model="ir.ui.view">
+    <field name="name">generate_report</field>
+    <field name="model">check_report_gen</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string= "Check Reports">
+      <group>
+       
+      
+      
+            <field name="report_type"/>
+         
+        
+            <field name="partner_id" attrs="{'invisible': [('report_type', 'in',  ['1', '3','4'])],'required':[('report_type', 'in',  ['2'])]}"  />
+            <field name="date_from"  attrs="{'invisible': [('report_type', 'in',  ['3','4'])],'required':[('report_type', 'in',  ['1','2'])]}"  />
+            <field name="date_to"  attrs="{'invisible': [('report_type', 'in',  ['3','4'])],'required':[('report_type', 'in',  ['1'])]}"/>
+            <field name="check_from"  attrs="{'invisible': [('report_type', 'in',  ['1', '2','4'])],'required':[('report_type', 'in',  ['3'])]}"  />
+            <field name="check_to"  attrs="{'invisible': [('report_type', 'in',  ['1', '2','4'])]}" />
+
+       
+     
+      </group>
+      <footer>
+     <button name="action_get_attachment" string="Generate Attachment" type="object"/>
+      <button string="Cancel" class="btn-secondary" special="cancel"/>
+      
+      </footer>
+     </form>
+  </field>
+</record> 
+
+<!-- accion para llamar al wizard -->
+<record id="report_action" model="ir.actions.act_window">
+    <field name="name">Check Reports</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">check_report_gen</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" eval="False" />
+    <field name="target">new</field>
+    <field name="filter" eval="True"/>
+</record>
+
+<!--wizard para descargar-->
+<record model="ir.ui.view" id="descargar_hojas_view_form">
+			<field name="name">descargar.hojas.form</field>
+			<field name="model">descargar.hojas</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group string="Check Report">
+              <field name="email_to" />
+							<field name="file_name" readonly="1" invisible="1" attrs="{'invisible': [('archive', '=', False)]}"/>
+              <field name="archive" filename="file_name" readonly="1" attrs="{'invisible': [('archive', '=', False)]}"/>
+              <field name="invoice_without_email"/>
+            </group>
+					</sheet>
+          <footer>
+          <button name="get_report" string="Enviar" type="object"/>
+          <button string="Cancel" class="btn-secondary" special="cancel"/>
+         </footer>
+				</form>
+			</field>
+		</record>
+</data>
+</odoo>

@@ -1,0 +1,10 @@
+<odoo>
+  <data>
+  <!-- menu_finance_reports -->
+    <menuitem id="check_reports" 
+    name="Check Reports" 
+    sequence="20" 
+    parent="account.menu_finance_reports" 
+    action="check_report.report_action"/>
+  </data>
+</odoo>

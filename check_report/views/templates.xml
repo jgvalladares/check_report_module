@@ -1,0 +1,158 @@
+<odoo>
+    <data>
+<!--
+        <template id="listing">
+          <ul>
+            <li t-foreach="objects" t-as="object">
+              <a t-attf-href="#{ root }/objects/#{ object.id }">
+                <t t-esc="object.display_name"/>
+              </a>
+            </li>
+          </ul>
+        </template>
+        <template id="object">
+          <h1><t t-esc="object.display_name"/></h1>
+          <dl>
+            <t t-foreach="object._fields" t-as="field">
+              <dt><t t-esc="field"/></dt>
+              <dd><t t-esc="object[field]"/></dd>
+            </t>
+          </dl>
+        </template>
+-->
+<record id="report_custom"  model="ir.actions.report">
+   <field name="name">Check Report</field>
+   <field name="model">check_report_gen</field>
+   <field name="report_type">qweb-pdf</field>
+   <field name="report_name">check_report.account_payment_template</field>
+   <field name="report_file">check_report.account_payment_template</field>
+   <field name="print_report_name">'Check Report - %s' % </field>
+   <field name="binding_model_id" ref="model_check_report_gen" />
+   <field name="binding_type">report</field>
+   <field name="attachment"/>
+</record>
+
+<template id="account_payment_template">
+  <t t-call="web.html_container">
+    <t t-call="check_report.account_payment_template_report" />
+  </t>
+</template>
+
+
+<template id="account_payment_template_report">
+<div  style="page-break-after: always;">
+  <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+    <br></br>
+    <table align="center" class="table-condensed" border="1" style="margin-top:1em;table-layout:fixed;border-collapse:collapse;empty-cells:show;width:100%;height:150px;font-size:12px">
+                   
+      <thead style="background-color: #FA8072;">
+        <tr>
+          <th >Número de cheque</th>
+          <th >Cliente/Proveedor</th>
+          <th >Valor</th>
+        
+        </tr>
+      </thead>        
+          <tbody>
+            <tr t-foreach="checkRecords" t-as="record">
+              <td>
+                <t t-esc="record['name']"/>
+              </td>
+              <td>
+                <t t-if="record.get('partner_id')">
+                  <t t-esc="record['partner_id'][1]"/>
+                </t>
+              </td>
+              <td>
+                <t t-esc="record['amount']"/>
+              </td>
+            </tr>
+            </tbody>
+      </table>
+</div>
+<!--fin primera tabla primera pagina-->
+<div  style="page-break-before: always;">
+  <span style="border-image: initial; border: 1px solid black;" t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+    <br></br>
+      <style>
+          table.customTable {
+            width: 100%;
+            background-color: #FFFFFF;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #7ea8f8;
+            border-style: solid;
+            color: #000000;
+          }
+
+          table.customTable td, table.customTable th {
+            border-width: 1px;
+            border-color: black;
+            border-style: solid;
+            padding: 5px;
+          }
+
+          table.customTable thead {
+            background-color: #7ea8f8;
+          }
+          </style>
+      
+    <table align="center" class="customTable " >
+      <thead>
+        <tr>
+          <th >Número de cheque</th>
+          <th >Fecha de pago</th>
+          <th >Cliente/Proveedor</th>
+          <th >Valor</th>
+          <th >A la firma de</th>
+          <th >Fecha</th>
+          <th >No.Cédula</th>
+        </tr>
+      </thead>
+      <tbody>
+        <t t-set="counter" t-value="0"/>
+          <tr t-foreach="checkRecords" t-as="record">
+             
+            <td>
+            <t t-if="record.get('check_number')">
+              <t t-esc="record['check_number']"/>
+            </t>
+            </td>
+            <td>
+              <t t-esc="record['date']"/>
+            </td>
+            <td>
+              <t t-if="record.get('partner_id')">
+              <t t-esc="record['partner_id'][1]"/>
+              </t>
+            </td>
+            <td>
+              <t t-esc="record['amount']"/>
+            </td>
+            <td>  </td>
+            <td>  </td>
+             <td>  </td>
+              <t  t-set="counter" t-value="counter + 1"/>
+          </tr>
+          </tbody>
+        </table>
+        <table >
+          <tr>
+              <td>
+              Total de cheques:
+              </td>
+              <td>
+                <t t-esc="counter"/> 
+              </td>
+            </tr>
+        </table> 
+</div>
+</template>
+
+
+
+
+<!--template para email-->
+
+</data>
+</odoo>
